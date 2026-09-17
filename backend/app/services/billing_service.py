@@ -34,22 +34,46 @@ class BillingService:
         else:
             self.client = None
 
+    @staticmethod
+    def normalize_plan(plan: Dict[str, Any]) -> Dict[str, Any]:
+        """Return one stable snake_case contract for every pricing plan source."""
+        def value(snake: str, camel: str, default: Any = None) -> Any:
+            return plan[snake] if snake in plan else plan.get(camel, default)
+
+        slug = value("slug", "code", "")
+        return {
+            "id": plan.get("id", slug),
+            "slug": slug,
+            "name": plan.get("name", ""),
+            "positioning": plan.get("positioning", ""),
+            "description": plan.get("description", ""),
+            "price": plan.get("price", 0),
+            "price_yearly": value("price_yearly", "priceYearly", 0),
+            "yearly_discount_percent": value("yearly_discount_percent", "yearlyDiscountPercent", 0),
+            "currency": plan.get("currency", "INR"),
+            "billing_interval": value("billing_interval", "billingInterval", "monthly"),
+            "included_courses": value("included_courses", "includedCourses", []),
+            "included_tools": value("included_tools", "includedTools", []),
+            "simulator_access": value("simulator_access", "simulatorAccess", "none"),
+            "community_tier": value("community_tier", "communityTier", "limited"),
+            "ai_coach_access": value("ai_coach_access", "aiCoachAccess", False),
+            "monthly_gems": value("monthly_gems", "monthlyGems", 0),
+            "is_popular": plan.get("is_popular", plan.get("isPopular", False)),
+        }
+
     def get_plans(self) -> List[Dict[str, Any]]:
         """Retrieves active subscription plans from MongoDB, falling back to core definitions."""
         cursor = self.db.subscriptionPlans.find({"is_active": True}).sort("display_order", 1)
         plans_list = list(cursor)
         if plans_list:
-            for p in plans_list:
-                p["id"] = p.get("slug", "")
-                p.pop("_id", None)
-            return plans_list
+            return [self.normalize_plan(p) for p in plans_list]
 
-        return [
+        return [self.normalize_plan(plan) for plan in [
             PLAN_DEFINITIONS[PlanTier.BASIC],
             PLAN_DEFINITIONS[PlanTier.TRADER],
             PLAN_DEFINITIONS[PlanTier.PRO],
             PLAN_DEFINITIONS[PlanTier.ELITE],
-        ]
+        ]]
 
     def _get_or_create_razorpay_plan(self, plan_def: Dict[str, Any], interval: str, amount_paise: int) -> str:
         """Fetches existing Razorpay plan or automatically creates it on the merchant's Razorpay account."""

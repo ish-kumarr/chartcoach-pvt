@@ -833,7 +833,7 @@ export function getDashboardData(
 
 // ─── BACKEND API INTEGRATION ───
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001";
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export async function fetchCoursesFromApi(userEmail: string = "trader@chartcoach.com"): Promise<Course[]> {
   try {

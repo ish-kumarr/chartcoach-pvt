@@ -72,6 +72,16 @@ export default function AppSidebar({
       icon: BookOpen,
     },
     {
+      label: "Test player",
+      href: "/learn/price-action-secrets/1",
+      icon: BookOpen,
+    },
+    {
+      label: "Preview video (no DRM)",
+      href: "/learn/price-action-secrets/1?preview=1",
+      icon: BookOpen,
+    },
+    {
       label: "Practice",
       href: "/simulator",
       icon: Target,

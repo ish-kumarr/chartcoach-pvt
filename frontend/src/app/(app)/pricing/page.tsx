@@ -378,7 +378,7 @@ export default function PricingPage() {
                     }`}>
                       <Zap className="w-3 h-3 fill-current" />
                     </div>
-                    <span>{plan.monthly_gems.toLocaleString("en-IN")} AI Coach Gems / month</span>
+                    <span>{Number(plan.monthly_gems ?? 0).toLocaleString("en-IN")} AI Coach Gems / month</span>
                   </div>
 
                   <div className={`flex items-start gap-2.5 ${isElite ? "text-slate-300" : "text-slate-600"}`}>

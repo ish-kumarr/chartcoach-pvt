@@ -1,0 +1,1 @@
+"""Pure simulator domain logic."""

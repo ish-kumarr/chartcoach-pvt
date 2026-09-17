@@ -8,7 +8,16 @@
 //   attaches (and, on login, stores) that cookie.
 // - There is no token to pass around here; the browser handles it.
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+type BrowserLocation = Pick<Location, "protocol" | "hostname">;
+
+export function resolveApiUrl(configured: string | undefined, location?: BrowserLocation): string {
+  if (configured?.trim()) return configured.trim().replace(/\/$/, "");
+  const browser = location ?? (typeof window === "undefined" ? undefined : window.location);
+  if (browser) return `${browser.protocol}//${browser.hostname}:8000`;
+  return "http://localhost:8000";
+}
+
+const API_URL = resolveApiUrl(process.env.NEXT_PUBLIC_API_URL);
 
 export type User = {
   id: number | string;
@@ -190,7 +199,7 @@ export async function removeFace(): Promise<void> {
 export function getMonitorSocketUrl(): string {
   // The login cookie rides along automatically on this connection too,
   // since it is same-site with the backend.
-  const wsUrl = (API_URL || "http://127.0.0.1:8001").replace(/^http/, "ws");
+  const wsUrl = API_URL.replace(/^http/, "ws");
   return `${wsUrl}/ws/monitor`;
 }
 

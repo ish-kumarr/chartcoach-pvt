@@ -82,12 +82,19 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException) 
     elif exc.status_code == status.HTTP_429_TOO_MANY_REQUESTS:
         code = "RATE_LIMIT_EXCEEDED"
 
-    message = exc.detail if isinstance(exc.detail, str) else "An HTTP error occurred."
+    if isinstance(exc.detail, dict):
+        code = exc.detail.get("code", code)
+        message = exc.detail.get("message", "An HTTP error occurred.")
+        details = {key: value for key, value in exc.detail.items() if key not in {"code", "message"}}
+    else:
+        message = exc.detail if isinstance(exc.detail, str) else "An HTTP error occurred."
+        details = None
     return build_error_response(
         code=code,
         message=message,
         status_code=exc.status_code,
         request_id=req_id,
+        details=details,
     )
 
 

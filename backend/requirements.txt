@@ -5,6 +5,7 @@ uvicorn[standard]
 # Database (MongoDB)
 pymongo[srv]>=4.17.0
 dnspython>=2.8.0
+mongomock>=4.3.0
 # Optional: pymysql kept for running scripts/migrate_mysql_to_mongo.py
 pymysql
 
@@ -32,6 +33,9 @@ websockets
 
 # HTTP Client for financial market APIs (Polygon.io)
 httpx>=0.28.0
+
+# Simulator worker coordination and event queues
+redis>=5.2.0
 
 # Payment Gateway (Razorpay Recurring Subscriptions)
 razorpay>=2.0.1

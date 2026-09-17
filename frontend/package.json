@@ -6,25 +6,39 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run"
   },
   "dependencies": {
     "@number-flow/react": "^0.6.2",
     "@radix-ui/react-accordion": "^1.2.20",
     "@radix-ui/react-icons": "^1.3.2",
+    "@ai-sdk/react": "^4.0.96",
+    "@streamdown/cjk": "^1.0.3",
+    "@streamdown/code": "^1.1.1",
+    "@streamdown/math": "^1.0.2",
+    "@streamdown/mermaid": "^1.0.2",
+    "ai": "^7.0.93",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "d3-hierarchy": "^3.1.2",
+    "cn": "^0.2.6",
     "lightweight-charts": "^5.2.1",
-    "lucide-react": "^1.41.0",
-    "motion": "^13.2.0",
+    "lucide-react": "^1.42.0",
     "next": "16.3.2",
+    "radix-ui": "^1.6.7",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "tailwind-merge": "^3.6.0"
+    "shaka-player": "5.2.9",
+    "streamdown": "^2.6.0",
+    "tailwind-merge": "^3.6.0",
+    "use-stick-to-bottom": "^1.1.6",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/d3-hierarchy": "^3.1.7",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -32,7 +46,9 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
     "puppeteer-core": "^25.10.0",
+    "jsdom": "^29.1.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.11"
   }
 }
